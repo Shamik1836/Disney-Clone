@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ImgSlider from "./ImgSlider";
 import Viewers from "./Viewers";
 import Movies from "./Movies";
+import db from "../firebase";
+import { useDispatch } from "react-redux";
+import { setMovies } from "../features/movie/movieSlice";
 function Home() {
+  const dispatch = useDispatch();
+  // Grab the movies from the database using useEffect
+  // onsnapshot means take a picture of database and send it to you whenever u ask for
+  useEffect(() => {
+    db.collection("movies").onSnapshot((snapshot) => {
+      let tempMovies = snapshot.docs.map((doc) => {
+        console.log(doc.data());
+        return { id: doc.id, ...doc.data() };
+      });
+      // console.log(tempMovies);
+      dispatch(setMovies(tempMovies));
+    });
+  }, []);
+
   return (
     <Container>
       <ImgSlider />

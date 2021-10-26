@@ -1,11 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import { selectMovies } from "../features/movie/movieSlice";
+import { useSelector } from "react-redux";
 function Movies() {
+  const movies = useSelector(selectMovies);
+  console.log("This is movies", movies);
   return (
     <Container>
       <h4>Recommended for You</h4>
       <Content>
-        <Wrap>
+        {movies &&
+          movies.map((movie) => (
+            <Wrap key={movie.id}>
+              <img src={movie.cardImg} />
+            </Wrap>
+          ))}
+
+        {/* <Wrap>
           <img
             src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/6A7F6C940FBD19A243E207069D16077FF0E53A519ED7D4892E7B8762834B74A6/scale?width=1200&aspectRatio=1.78&format=jpeg"
             alt=""
@@ -22,13 +33,7 @@ function Movies() {
             src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/6A7F6C940FBD19A243E207069D16077FF0E53A519ED7D4892E7B8762834B74A6/scale?width=1200&aspectRatio=1.78&format=jpeg"
             alt=""
           />
-        </Wrap>
-        <Wrap>
-          <img
-            src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/6A7F6C940FBD19A243E207069D16077FF0E53A519ED7D4892E7B8762834B74A6/scale?width=1200&aspectRatio=1.78&format=jpeg"
-            alt=""
-          />
-        </Wrap>
+        </Wrap> */}
       </Content>
     </Container>
   );
